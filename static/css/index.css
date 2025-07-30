@@ -133,5 +133,110 @@ body {
   font-size: smaller;
 }
 
+.tldr-hero {
+  background: linear-gradient(to right, #fff9c4,	#fff8b0);
+}
 
+.tldr-card {
+  background: linear-gradient(90deg, #f5f7fa, #fff9c4 70%, #fff8b0 100%);
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 16px 0 rgba(60, 60, 60, 0.10);
+  padding: 2rem 2.5rem;
+  margin: 2.5rem 0 2.5rem 0;
+  border: 1px solid #f5eebd;
+}
 
+.section-highlight {
+  background: #f8fafc;
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 12px 0 rgba(60,60,60,0.07);
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.figure-caption {
+  font-size: 1rem;
+  color: #8a8a8a;
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+.publication-links .button {
+  margin: 0.25rem 0.5rem;
+}
+@media (max-width: 800px) {
+  .tldr-card, .section-highlight { padding: 1.2rem 1rem; }
+}
+
+.bibtex-card {
+  background: #fcfbf7;
+  border: 1px solid #f5eebd;
+  border-radius: 1.25rem;
+  box-shadow: 0 1px 8px 0 rgba(60,60,60,0.06);
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  margin-bottom: 2rem;
+}
+.bibtex-label {
+  font-size: 1.05em;
+  color: #856404;
+  font-weight: 500;
+  margin-bottom: 0.5em;
+  display: block;
+  letter-spacing: 0.01em;
+}
+.bibtex-pre code {
+  font-size: 1.03em;
+  background: transparent;
+  border: none;
+  color: #54461b;
+}
+.copy-btn {
+  float: right;
+  margin-top: -2.2em;
+  margin-right: 0.5em;
+  font-size: 0.95em;
+  background: #fff7c0;
+  border-radius: 0.5em;
+  padding: 0.25em 0.7em;
+  border: 1px solid #ffe066;
+  color: #826c13;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.copy-btn:hover {
+  background: #fff9c4;
+}
+@media (max-width: 600px) {
+  .bibtex-card { padding: 1em; }
+  .copy-btn { margin-top: -2em; }
+}
+
+.venue-btn {
+  background: linear-gradient(90deg, #d46115 60%, #d0a025 100%);
+  color: #fff !important;
+  border: none;
+  font-weight: 600;
+  box-shadow: 0 2px 8px 0 rgba(60,60,60,0.10);
+  margin-right: 0.2em;
+  pointer-events: none; /* Not clickable */
+  opacity: 1;
+}
+.venue-btn:hover, .venue-btn:focus {
+  background: linear-gradient(90deg, #157a35 60%, #29975d 100%);
+  color: #fff !important;
+}
+.venue-btn .icon {
+  color: #fff !important;
+}
+
+.section-plain {
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: 1.25rem;
+  padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 4px 0 rgba(60,60,60,0.04);
+}
+@media (max-width: 600px) {
+  .section-plain { padding: 1.2em 0.6em 1em 0.6em; }
+}

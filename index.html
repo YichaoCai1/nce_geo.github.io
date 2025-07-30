@@ -2,211 +2,247 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
-  <!-- Replace the content tag with appropriate information -->
-  <meta name="description" content="DESCRIPTION META TAG">
-  <meta property="og:title" content="SOCIAL MEDIA TITLE TAG"/>
-  <meta property="og:description" content="SOCIAL MEDIA DESCRIPTION TAG TAG"/>
-  <meta property="og:url" content="URL OF THE WEBSITE"/>
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/image/your_banner_image.png" />
+  <meta name="description" content="We develop a theoretical and empirical framework for understanding cross-modal misalignment in contrastive learning. Our results explain when and why CLIP-style models succeed despite noisy annotations.">
+  <meta property="og:title" content="Cross-Modal Misalignment in Contrastive Learning"/>
+  <meta property="og:description" content="We show that contrastive learning identifies only unbiased shared semantics and provide new guidance for dataset curation and representation robustness."/>
+  <meta property="og:url" content="https://yichaocai.com/crossmodal_misalignment/"/>
+  <!-- FontAwesome 5 via CDN for all icons (PDF, GitHub, etc) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Academicons for arXiv -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <meta property="og:image" content="static/images/lvm.png" />
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
-
-
-  <meta name="twitter:title" content="TWITTER BANNER TITLE META TAG">
-  <meta name="twitter:description" content="TWITTER BANNER DESCRIPTION META TAG">
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="static/images/your_twitter_banner_image.png">
+  <meta name="twitter:title" content="Cross-Modal Misalignment in Contrastive Learning">
+  <meta name="twitter:description" content="New theory explains when and why contrastive learning succeeds with misaligned data.">
+  <meta name="twitter:image" content="static/images/lvm.png">
   <meta name="twitter:card" content="summary_large_image">
-  <!-- Keywords for your paper to be indexed by-->
-  <meta name="keywords" content="KEYWORDS SHOULD BE PLACED HERE">
+  <meta name="keywords" content="multimodal learning, contrastive learning, CLIP, dataset bias, vision-language models">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
   <title>On the Value of Cross-Modal Misalignment in Multimodal Representation Learning</title>
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-  rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="static/css/index.css">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script src="static/js/bulma-carousel.min.js"></script>
-  <script src="static/js/bulma-slider.min.js"></script>
-  <script src="static/js/index.js"></script>
+  <style>
+    .tldr-card {
+      background: linear-gradient(90deg, #f5f7fa, #fff9c4 70%, #fff8b0 100%);
+      border-radius: 1.25rem;
+      box-shadow: 0 2px 16px 0 rgba(60, 60, 60, 0.10);
+      padding: 2rem 2.5rem;
+      margin: 2.5rem 0 2.5rem 0;
+      border: 1px solid #f5eebd;
+    }
+    .section-highlight {
+      background: #f8fafc;
+      border-radius: 1.25rem;
+      box-shadow: 0 1px 12px 0 rgba(60,60,60,0.07);
+      padding: 2rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .figure-caption {
+      font-size: 1rem;
+      color: #8a8a8a;
+      margin-top: 0.25rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .publication-links .button {
+      margin: 0.25rem 0.5rem;
+    }
+    @media (max-width: 800px) {
+      .tldr-card, .section-highlight { padding: 1.2rem 1rem; }
+    }
+  </style>
 </head>
 <body>
-
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">On the Value of Cross-Modal Misalignment in Multimodal Representation Learning</h1>
-            <div class="is-size-5 publication-authors">
-              <!-- Paper authors -->
-              <span class="author-block">
-                <a href="https://yichaocai.com/" target="_blank">Yichao Cai*, </a></span>
-                  <span class="author-block">
-                    <a href="https://sites.google.com/view/yuhangliu/homepage" target="_blank">Yuhang Liu*, </a></span>
-                  <span class="author-block">
-                    <a href="https://erdungao.github.io/" target="_blank">Erdun Gao, </a></span>
-                  <span class="author-block">
-                    Tianjiao Jiang </span>
-                  <span class="author-block">
-                    <a href="https://zzhang.org/" target="_blank">Zhen Zhang, </a></span>
-                  <span class="author-block">
-                    <a href="https://researchers.adelaide.edu.au/profile/anton.vandenhengel" target="_blank">Anton Van Den Hengel, </a></span>
-                    <span class="author-block">
-                      <a href="https://cs.adelaide.edu.au/~javen/" target="_blank">Javen Qinfeng Shi</a>
-                  </span>
-                  </div>
-
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block">* Equal Contribution<br>Australian Institute for Machine Learning (AIML), The University of Adelaide</span>
-                    <!-- <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span> -->
-                  </div>
-
-                  <!-- <div class="column has-text-centered">
-                    <div class="publication-links">
-                      <span class="link-block">
-                        <a href="https://arxiv.org/pdf/2504.10143" target="_blank"
-                        class="external-link button is-normal is-rounded is-dark">
-                        <span class="icon">
-                          <i class="fas fa-file-pdf"></i>
-                        </span>
-                        <span>Paper</span>
-                      </a>
-                    </span> -->
-
-                  <!-- Github link -->
-                  <span class="link-block">
-                    <a href="https://github.com/YichaoCai1/crossmodal_mislaignment" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code</span>
-                  </a>
-                </span>
-
-                <!-- ArXiv abstract Link -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/pdf/2504.10143" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-            </div>
-          </div>
+<!-- Header: Split, Clean -->
+<section class="section" style="padding-bottom:0;">
+  <div class="container is-max-desktop">
+    <div class="columns is-vcentered is-multiline">
+      <div class="column is-8-desktop is-12-mobile">
+        <h1 class="title is-1" style="line-height:1.2;">On the Value of Cross-Modal Misalignment in Multimodal Representation Learning</h1>
+        <div class="is-size-5">
+          <span class="author-block"><a href="https://yichaocai.com/" target="_blank">Yichao Cai*</a>, </span>
+          <span class="author-block"><a href="https://sites.google.com/view/yuhangliu/homepage" target="_blank">Yuhang Liu*</a>, </span>
+          <span class="author-block"><a href="https://erdungao.github.io/" target="_blank">Erdun Gao</a>, </span>
+          <span class="author-block">Tianjiao Jiang, </span>
+          <span class="author-block"><a href="https://zzhang.org/" target="_blank">Zhen Zhang</a>, </span>
+          <span class="author-block"><a href="https://researchers.adelaide.edu.au/profile/anton.vandenhengel" target="_blank">Anton Van Den Hengel</a>, </span>
+          <span class="author-block"><a href="https://cs.adelaide.edu.au/~javen/" target="_blank">Javen Qinfeng Shi</a></span>
+        </div>
+        <div class="is-size-6" style="margin-top:0.5em;">
+          <span class="author-block">* Equal Contribution <br>Australian Institute for Machine Learning (AIML), The University of Adelaide</span>
+        </div>
+      </div>
+      <div class="column is-4-desktop is-12-mobile has-text-centered">
+        <div class="publication-links" style="margin-top:1rem;">
+          <a href="https://github.com/YichaoCai1/crossmodal_misalignment" target="_blank" class="external-link button is-normal is-rounded is-dark">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>Code</span>
+          </a>
+          <a href="https://arxiv.org/abs/2504.10143" target="_blank" class="external-link button is-normal is-rounded is-dark">
+            <span class="icon"><i class="ai ai-arxiv"></i></span>
+            <span>arXiv</span>
+          </a>
+          <a href="https://arxiv.org/pdf/2504.10143" target="_blank" class="external-link button is-normal is-rounded is-info">
+            <span class="icon"><i class="fas fa-file-pdf"></i></span>
+            <span>Download PDF</span>
+          </a>
+          <a href="#" target="_blank" class="external-link button is-normal is-rounded venue-btn">
+            <span class="icon"><i class="fas fa-award"></i></span>
+            <span>Under Reviewing</span>
+          </a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
+<!-- TLDR Card -->
+<div class="container is-max-desktop">
+  <div class="tldr-card">
+    <p class="has-text-centered is-size-5" style="margin-bottom:0;">
+      ✨ <strong>TL;DR:</strong> Multimodal contrastive learning identifies only unbiased shared semantics under cross-modal misalignment,<br>
+      modeled via selection and perturbation biases. It reconciles opposing views and offers guidance: reduce misalignment for generalization, use it for robustness.
+    </p>
+  </div>
+</div>
+
+<!-- Abstract -->
+<div class="container is-max-desktop">
+  <div class="section-plain">
     <h2 class="title is-3 has-text-centered">Abstract</h2>
     <p class="content has-text-justified">
-      This work introduces a unified framework for understanding cross-modal misalignment in vision-language learning. Despite prevailing assumptions, real-world image-text pairs often contain only partially overlapping semantics. Using a latent variable model (LVM), we formalize two common misalignment mechanisms—selection and perturbation biases—and analyze their impact on contrastive learning methods like CLIP. Our theory reveals that multimodal contrastive learning inherently extracts the unbiased shared semantics. Empirical studies across synthetic and real datasets confirm these insights.
+      Multimodal representation learning, exemplified by multimodal contrastive learning (MMCL) using image-text pairs, aims to learn powerful representations by aligning cues across modalities. This approach relies on the core assumption that the exemplar image-text pairs constitute two representations of an identical concept. However, recent research has revealed that real-world datasets often exhibit <strong>cross-modal misalignment</strong>. There are two distinct viewpoints on how to address this issue: one suggests mitigating the misalignment, and the other leveraging it. We seek here to reconcile these seemingly opposing perspectives, and to provide a practical guide for practitioners. Using latent variable models we thus formalize cross-modal misalignment by introducing two specific mechanisms: <strong>Selection bias</strong>, where some semantic variables are absent in the text, and <strong>perturbation bias</strong>, where semantic variables are altered---both leading to misalignment in data pairs. Our theoretical analysis demonstrates that, under mild assumptions, the representations learned by MMCL capture exactly the information related to the subset of the semantic variables invariant to selection and perturbation biases. This provides a unified perspective for understanding misalignment. Based on this, we further offer actionable insights into how misalignment should inform the design of real-world ML systems. We validate our theoretical findings via extensive empirical studies on both synthetic data and real image-text datasets, shedding light on the nuanced impact of cross-modal misalignment on multimodal representation learning.
     </p>
   </div>
-</section>
+</div>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">1. Motivation</h2>
-    <p class="content">
-      Multimodal contrastive learning aims to align image and text embeddings in a shared space. This assumes that the pairs are semantically matched. However, in practice, the matching is often noisy: some semantics are missing (selection bias), and some are replaced or incorrect (perturbation bias). Surprisingly, such misalignment doesn't always harm performance—sometimes, it improves robustness. This paper seeks to understand and exploit that phenomenon.
-    </p>
-  </div>
-</section>
-
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">2. Theoretical Framework</h2>
-    <p class="content">
-      The authors propose a flexible latent variable model, where the full semantics of each sample are encoded in latent variables. The model generates images and texts via different deterministic paths, with the possibility of omitting or altering variables. Two types of biases are defined:
-    </p>
-    <ul>
-      <li><strong>Selection Bias (θ):</strong> Certain (potental) shared semantics are excluded from the text modality.</li>
-      <li><strong>Perturbation Bias (ρ):</strong> Spurious semantics (not identical to the original image sample) are added to text across positive pairs.</li>
+<!-- Key Contributions -->
+<div class="container is-max-desktop">
+  <div class="section-highlight">
+    <h2 class="title is-3 has-text-centered">Key Contributions</h2>
+    <ul class="content" style="font-size:1.12em;">
+      <li>📌 Formalize cross-modal misalignment via a latent variable model with selection and perturbation biases.</li>
+      <li>📌 Prove MMCL block-identifies only the unbiased shared semantic variables, regardless of latent causal structure.</li>
+      <li>📌 Derive practical implications for foundation model pretraining and out-of-distribution robustness.</li>
+      <li>📌 Validate our theory through simulations, real datasets (MPI3D, Causal3DIdent), and an OpenCLIP case study.</li>
     </ul>
-    <br><br>
-    <figure class="image">
-      <img src="static/images/lvm.png" alt="LVM Diagram">
-    </figure>
-    <p class="subtitle has-text-centered">Figure:  Illustration of the proposed latent variable model (left), with misalignment across modalities modeled via selection and perturbation bias.</p>
-    <br><br>
+  </div>
+</div>
+
+<!-- Motivation (IN BOX) -->
+<div class="container is-max-desktop">
+  <div class="section-plain">
+    <h2 class="title is-3 has-text-centered">Motivation</h2>
     <p class="content">
-      <strong> Main Results </strong>:The main theoretical result demonstrates that contrastive learning consistently identifies only the shared, unbiased components of the underlying semantic variables—regardless of the causal relationships among them. This explains why CLIP-like models maintain strong generalization performance even when trained on semantically noisy or misaligned image-text pairs. These findings also highlight the critical importance of careful dataset design in multimodal contrastive learning.
+      Multimodal contrastive learning aligns image and text embeddings. But captions often omit (selection bias) or distort (perturbation bias) semantics. Surprisingly, this misalignment sometimes helps rather than hurts—enhancing robustness. Our work seeks to understand and leverage this paradox.
     </p>
   </div>
-</section>
+</div>
 
+
+
+<!-- Theoretical Framework -->
+<div class="container is-max-desktop">
+  <div class="section-highlight">
+  <h2 class="title is-3 has-text-centered">Theoretical Framework</h2>
+      <p class="content">
+        We introduce a latent variable model where each modality is generated from shared semantics with modality-specific biases. We define:
+      </p>
+      <ul>
+        <li><strong>Selection Bias (θ):</strong> Shared semantics excluded from the text modality.</li>
+        <li><strong>Perturbation Bias (ρ):</strong> Spurious or altered semantics added to text.</li>
+      </ul>
+      <figure class="image">
+        <img src="static/images/lvm.png" alt="LVM Diagram" style="max-width: 720px; margin:auto;">
+      </figure>
+      <div class="figure-caption">
+        Illustration of our latent variable model with semantic misalignment.
+      </div>
+      <p class="content">
+        <strong>Main Result:</strong> Contrastive learning consistently identifies unbiased shared semantics—regardless of latent causal structure—explaining why CLIP-like models succeed despite noise.
+      </p>
+  </div>
+</div>
+
+<!-- Empirical Validation (IN BOX) -->
+<div class="container is-max-desktop">
+  <div class="section-plain">
+    <h2 class="title is-3 has-text-centered">Empirical Validation</h2>
+    <p class="content">
+      We validate our theory on Causal3DIdent, MPI3D, and OpenCLIP. Results confirm that misalignment shapes concept awareness. See full results in the <a href="https://arxiv.org/pdf/2504.10143" target="_blank">paper</a>.
+    </p>
+  </div>
+</div>
+
+<!-- OpenCLIP Case Study -->
+<div class="container is-max-desktop">
+  <div class="section-highlight">
+    <h2 class="title is-3 has-text-centered">OpenCLIP Case Study</h2>
+    <p class="content">
+      We evaluate OpenCLIP on 146 visual concepts across 15 groups. Performance drops sharply on under-captioned groups like <em>Stereotype</em> and <em>Emotion</em>, confirming that annotation frequency governs learned awareness. Captions act as epistemic filters—prioritizing some semantics over others.
+    </p>
+    <figure class="image">
+      <img src="static/images/casestudy.png" alt="OpenCLIP F1 performance by concept group" style="max-width: 720px; margin:auto;">
+    </figure>
+    <div class="figure-caption">
+      LAION-400M captions coverage rate and OpenCLIP zero-shot performance across concept groups.
+    </div>
+  </div>
+</div>
+
+<!-- Key Takeaways (IN BOX) -->
+<div class="container is-max-desktop">
+  <div class="section-plain">
+    <h2 class="title is-3 has-text-centered">Key Takeaways</h2>
+    <ul class="content" style="font-size:1.1em;">
+      <li><strong>📌 Unified Theory:</strong> MMCL identifies only unbiased shared semantics under misalignment.</li>
+      <li><strong>📌 Bias as Signal:</strong> Misalignment encodes implicit value structures in human annotation.</li>
+      <li><strong>📌 Practical Guidance:</strong> Faithful semantics help generalization; targeted misalignment aids robustness.</li>
+      <li><strong>📌 Open Directions:</strong> Model emergent semantics, random missingness, and linear identifiability.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- Broader Impacts -->
+<div class="container is-max-desktop">
+  <div class="section-highlight">
+    <h2 class="title is-3 has-text-centered">Broader Impacts</h2>
+    <p class="content">
+      Our work supports a modern view of linguistic relativity: captions shape the conceptual space that models represent. Annotation choices reflect epistemic and ethical values. By treating annotation as a value-laden act, we can align learned representations with human priorities.
+    </p>
+  </div>
+</div>
+
+
+<!-- BibTeX -->
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">3. Experiments</h2>
-    <p class="content">
-      The paper evaluates the theory using numerical simulations, real-world (MPI-) and controlled synthetic datasets (Causal3DIdent). Metrics include zero-shot classification accuracy and semantic variable prediction accuracy (R², MCC).
-    </p>
-
-    <figure class="image">
-      <img src="static/images/causal3dIdent.png" alt="Causal3DIdent samples">
-    </figure>
-    <p class="subtitle has-text-centered">Figure: Latent causal model underlying the generation of image samples in the Causal3DIdent dataset.</p>
-    <figure class="image">
-      <img src="static/images/misalignment_settings.png" alt="Performance curves">
-    </figure>
-    <p class="subtitle has-text-centered">Table: Misalignment settings for text generation of Causal3DIdent dataset.</p>
-    <figure class="image">
-      <img src="static/images/performance.png" alt="Performance curves">
-    </figure>
-    <p class="subtitle has-text-centered">Figure: Predicting semantic variables under misalignment using image features. </p>
-  </div>
-</section>
-
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">4. Implications and Discussion</h2>
-    <p class="content">
-    This work challenges the assumption that perfect semantic alignment is necessary for effective multimodal learning. In fact, some degree of misalignment—such as selection or perturbation biases—can encourage models to focus on invariant, shared semantics. Our theoretical results show that contrastive learning recovers these unbiased components even without strong assumptions about the causal structure of the data, helping explain the robustness of CLIP-like models.<br><br>
-    Beyond performance, our findings have broader implications. Supervision—particularly text—acts as an epistemic filter, shaping which aspects of the visual world are represented and learned. Biases in annotation reflect implicit value judgments about what is relevant or important. Rather than treating these biases as mere noise, they can be studied as signals—providing behavioral priors that inform what humans prioritize. This reframes dataset design as both a technical and ethical practice: one that impacts not only generalization, but also what concepts are visible to the model in the first place.
-    </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">BibTeX</h2>
-    <pre><code>@article{cai2025misalignment,
+    <div class="bibtex-card">
+      <span class="bibtex-label">
+        📚 Cite this paper:
+        <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('bibtex-code').innerText);this.innerText='Copied!';setTimeout(()=>this.innerText='Copy',1300);">Copy</button>
+      </span>
+      <pre class="bibtex-pre"><code id="bibtex-code">@article{cai2025misalignment,
   title={On the Value of Cross-Modal Misalignment in Multimodal Representation Learning},
   author={Cai, Yichao and Liu, Yuhang and Gao, Erdun and Jiang, Tianjiao and Zhang, Zhen and van den Hengel, Anton and Shi, Javen Qinfeng},
   journal={arXiv preprint arXiv:2504.10143},
   year={2025}
 }</code></pre>
+    </div>
   </div>
 </section>
 
+
+<!-- Footer -->
 <footer class="footer">
   <div class="content has-text-centered">
     <p>
-      Based on the <a href="https://nerfies.github.io">Nerfies</a> project page template. Licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+      © 2025 Yichao Cai | Based on the <a href="https://nerfies.github.io">Nerfies</a> template. 
+      Licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
     </p>
   </div>
 </footer>
-
-</body>
-</html>
