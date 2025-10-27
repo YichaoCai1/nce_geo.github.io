@@ -144,7 +144,7 @@
   <div class="section-plain">
     <h2 class="title is-3 has-text-centered">Motivation</h2>
     <p class="content">
-      Multimodal contrastive learning aligns image and text embeddings. But captions often omit (selection bias) or distort (perturbation bias) semantics. Surprisingly, this misalignment sometimes helps rather than hurts—enhancing robustness. Our work seeks to understand and leverage this paradox.
+      Multimodal contrastive learning aligns image and text embeddings. But captions often omit or distort semantics. Surprisingly, this misalignment sometimes helps rather than hurts—enhancing robustness. Our work seeks to understand and leverage this paradox.
     </p>
   </div>
 </div>
@@ -159,17 +159,22 @@
         We introduce a latent variable model where each modality is generated from shared semantics with modality-specific biases. We define:
       </p>
       <ul>
-        <li><strong>Selection Bias (θ):</strong> Shared semantics excluded from the text modality.</li>
-        <li><strong>Perturbation Bias (ρ):</strong> Spurious or altered semantics added to text.</li>
+        <li><strong>Selection Bias (θ):</strong> select only certain semantic coordinates 𝕀_𝜃 ⊆ 𝕀_𝐬 from text (e.g., shape, color).
+      </li>
+        <li><strong>Perturbation Bias (ρ):</strong> corrupts or flips certain selected semantic coordinates 𝕀_𝜌 ⊂ 𝕀_𝜃 (e.g., color).</li>
       </ul>
+      <br><br>
       <figure class="image">
         <img src="static/images/lvm.png" alt="LVM Diagram" style="max-width: 720px; margin:auto;">
       </figure>
       <div class="figure-caption">
-        Illustration of our latent variable model with semantic misalignment.
+         Illustration of the latent variable model (left), with misalignment across modalities modeled via selection and perturbation bias. Example image-text pairs (right) illustrate the misalignment induced by these two biases.
       </div>
       <p class="content">
-        <strong>Main Result:</strong> Contrastive learning consistently identifies unbiased shared semantics, regardless of latent causal structure, explaining why CLIP-like models succeed despite noise.
+        <strong>Main Result (informal):</strong> Multimodal contrastive learning, when equipped with the correct representational bottleneck (i.e., feature size), consistently identifies unbiased shared semantics under cross-modal misalignment, irrespective of the latent causal structure.
+      </p>
+      <p>
+        <strong> Practical Guidance:</strong> (1) For large-scale pretraining: When domain shift is not an issue, rich, faithful captions maximize semantics and boost task generalization. (2) For robust adaptation: Omit or perturb environment-specific/sensitive cues to enforce invariance/ethics, using misalignment as regularization.
       </p>
   </div>
 </div>
@@ -179,7 +184,7 @@
   <div class="section-plain">
     <h2 class="title is-3 has-text-centered">Empirical Validation</h2>
     <p class="content">
-      We validate our theory on Causal3DIdent, MPI3D, and OpenCLIP. Results confirm that misalignment shapes concept awareness. See full results in the <a href="https://arxiv.org/pdf/2504.10143" target="_blank">paper</a>.
+      We validate our theory on Causal3DIdent, MPI3D, and OpenCLIP. Results confirm that misalignment shapes concept awareness -- Increasing selection or perturbation bias systematically reduces performance on biased concepts while leaving invariant ones stable. See full results in the <a href="https://arxiv.org/pdf/2504.10143" target="_blank">paper</a>.
     </p>
   </div>
 </div>
@@ -207,7 +212,6 @@
     <ul class="content" style="font-size:1.1em;">
       <li><strong>📌 Unified Theory:</strong> MMCL identifies only unbiased shared semantics under misalignment.</li>
       <li><strong>📌 Bias as Signal:</strong> Misalignment encodes implicit value structures in human annotation.</li>
-      <li><strong>📌 Practical Guidance:</strong> Faithful semantics help generalization; targeted misalignment aids robustness.</li>
       <li><strong>📌 Open Directions:</strong> Model emergent semantics, random missingness, and linear identifiability.</li>
       <li><strong>📌 Connection to prior work:</strong>  <a href="https://yichaocai.com/clap_paper.github.io" target="_blank">CLAP</a> naturally arises as a special case of our Corollary 4.2.</li>
     </ul>
@@ -217,7 +221,7 @@
 <!-- Broader Impacts -->
 <div class="container is-max-desktop">
   <div class="section-highlight">
-    <h2 class="title is-3 has-text-centered">Broader Impacts</h2>
+    <h2 class="title is-3 has-text-centered">Broader Impacts: Misalignment ≠ Noise: It’s an Epistemic Filter</h2>
     <p class="content">
       Our work supports a modern view of linguistic relativity: captions shape the conceptual space that models represent. Annotation choices reflect epistemic and ethical values. By treating annotation as a value-laden act, we can align learned representations with human priorities.
     </p>
