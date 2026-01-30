@@ -1,0 +1,4 @@
+
+# Large generated media
+static/images/*.gif
+*.gif
