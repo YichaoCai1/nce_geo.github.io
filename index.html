@@ -2,10 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="We develop a theoretical and empirical framework for understanding cross-modal misalignment in contrastive learning. Our results explain when and why CLIP-style models succeed despite noisy annotations.">
-  <meta property="og:title" content="Cross-Modal Misalignment in Contrastive Learning"/>
-  <meta property="og:description" content="We show that contrastive learning identifies only unbiased shared semantics and provide new guidance for dataset curation and representation robustness."/>
-  <meta property="og:url" content="https://yichaocai.com/crossmodal_misalignment/"/>
+  <meta name="description" content="We develop a measure-theoretic framework for InfoNCE, bridging stochastic training to deterministic energy landscapes and revealing a geometric bifurcation between unimodal and multimodal contrastive learning.">
+  <meta property="og:title" content="The Geometric Mechanics of Contrastive Representation Learning"/>
+  <meta property="og:description" content="Large-batch deterministic energies; unimodal strict convexity with a unique Gibbs equilibrium; multimodal negative symmetric divergence yields a structural modality gap."/>
+  <meta property="og:url" content="https://yichaocai.com/nce_geo/"/>
   <!-- FontAwesome 5 via CDN for all icons (PDF, GitHub, etc) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <!-- Academicons for arXiv -->
@@ -17,16 +17,16 @@
     <polyline points='17 3 21 7 17 11'/>
     <polyline points='7 13 3 17 7 21'/>
   </svg>">
-  <meta property="og:image" content="static/images/lvm.png" />
+  <meta property="og:image" content="static/images/og.png" />
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
-  <meta name="twitter:title" content="Cross-Modal Misalignment in Contrastive Learning">
-  <meta name="twitter:description" content="New theory explains when and why contrastive learning succeeds with misaligned data.">
-  <meta name="twitter:image" content="static/images/lvm.png">
+  <meta name="twitter:title" content="The Geometric Mechanics of Contrastive Representation Learning">
+  <meta name="twitter:description" content="A measure-theoretic framework for InfoNCE geometry: deterministic energies, unimodal convexity, and multimodal divergence-driven modality gap.">
+  <meta name="twitter:image" content="static/images/og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="keywords" content="multimodal learning, contrastive learning, CLIP, dataset bias, vision-language models">
+  <meta name="keywords" content="Contrastive Learning, InfoNCE, Representation Learning Theory, Modality Gap">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>On the Value of Cross-Modal Misalignment in Multimodal Representation Learning</title>
+  <title>The Geometric Mechanics of Contrastive Representation Learning</title>
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
@@ -69,37 +69,34 @@
   <div class="container is-max-desktop">
     <div class="columns is-vcentered is-multiline">
       <div class="column is-8-desktop is-12-mobile">
-        <h1 class="title is-1" style="line-height:1.2;">On the Value of Cross-Modal Misalignment in Multimodal Representation Learning</h1>
+        <h1 class="title is-1" style="line-height:1.2;">The Geometric Mechanics of Contrastive Representation Learning</h1>
         <div class="is-size-5">
-          <span class="author-block"><a href="https://yichaocai.com/" target="_blank">Yichao Cai*</a>, </span>
-          <span class="author-block"><a href="https://sites.google.com/view/yuhangliu/homepage" target="_blank">Yuhang Liu*</a>, </span>
-          <span class="author-block"><a href="https://erdungao.github.io/" target="_blank">Erdun Gao</a>, </span>
-          <span class="author-block">Tianjiao Jiang, </span>
+          <span class="author-block"><a href="https://yichaocai.com/" target="_blank">Yichao Cai</a>, </span>
           <span class="author-block"><a href="https://zzhang.org/" target="_blank">Zhen Zhang</a>, </span>
-          <span class="author-block"><a href="https://researchers.adelaide.edu.au/profile/anton.vandenhengel" target="_blank">Anton Van Den Hengel</a>, </span>
+          <span class="author-block"><a href="https://sites.google.com/view/yuhangliu/homepage" target="_blank">Yuhang Liu</a>, </span>
           <span class="author-block"><a href="https://cs.adelaide.edu.au/~javen/" target="_blank">Javen Qinfeng Shi</a></span>
         </div>
         <div class="is-size-6" style="margin-top:0.5em;">
-          <span class="author-block">* Equal Contribution <br>Australian Institute for Machine Learning (AIML), The University of Adelaide</span>
+          <span class="author-block">Australian Institute for Machine Learning (AIML), Adelaide University</span>
         </div>
       </div>
       <div class="column is-4-desktop is-12-mobile has-text-centered">
         <div class="publication-links" style="margin-top:1rem;">
-          <a href="https://github.com/YichaoCai1/crossmodal_misalignment" target="_blank" class="external-link button is-normal is-rounded is-dark">
+          <a href="https://github.com/YichaoCai1/InfoNCE_Geometry" target="_blank" class="external-link button is-normal is-rounded is-dark">
             <span class="icon"><i class="fab fa-github"></i></span>
             <span>Code</span>
           </a>
-          <a href="https://arxiv.org/abs/2504.10143" target="_blank" class="external-link button is-normal is-rounded is-dark">
+          <a href="https://arxiv.org/abs/2601.19597" target="_blank" class="external-link button is-normal is-rounded is-dark">
             <span class="icon"><i class="ai ai-arxiv"></i></span>
             <span>arXiv</span>
           </a>
-          <a href="https://arxiv.org/pdf/2504.10143" target="_blank" class="external-link button is-normal is-rounded is-info">
+          <a href="https://arxiv.org/pdf/2601.19597" target="_blank" class="external-link button is-normal is-rounded is-info">
             <span class="icon"><i class="fas fa-file-pdf"></i></span>
             <span>Download PDF</span>
           </a>
           <a href="#" target="_blank" class="external-link button is-normal is-rounded venue-btn">
             <span class="icon"><i class="fas fa-award"></i></span>
-            <span>NeurIPS 2025 (Splotlight)</span>
+            <span>Preprint 2026</span>
           </a>
         </div>
       </div>
@@ -111,7 +108,7 @@
 <div class="container is-max-desktop">
   <div class="tldr-card">
     <p class="has-text-centered is-size-5" style="margin-bottom:0;">
-      ✨ <strong>TL;DR:</strong> Multimodal contrastive learning identifies only unbiased shared semantics under cross-modal misalignment, modeled via selection and perturbation biases. 
+      ✨ <strong>TL;DR:</strong> We identify a geometric bifurcation in contrastive learning: Unimodal InfoNCE yields a unique convex Gibbs equilibrium, while Multimodal is coupled by a negative symmetric divergence driving "winner-take-all" dynamics, imposing the modality gap.
     </p>
   </div>
 </div>
@@ -121,7 +118,15 @@
   <div class="section-plain">
     <h2 class="title is-3 has-text-centered">Abstract</h2>
     <p class="content has-text-justified">
-      Multimodal representation learning, exemplified by multimodal contrastive learning (MMCL) using image-text pairs, aims to learn powerful representations by aligning cues across modalities. This approach relies on the core assumption that the exemplar image-text pairs constitute two representations of an identical concept. However, recent research has revealed that real-world datasets often exhibit cross-modal misalignment. There are two distinct viewpoints on how to address this issue: one suggests mitigating the misalignment, and the other leveraging it. We seek here to reconcile these seemingly opposing perspectives, and to provide a practical guide for practitioners. Using latent variable models we thus formalize cross-modal misalignment by introducing two specific mechanisms: Selection bias, where some semantic variables are absent in the text, and perturbation bias, where semantic variables are altered—both leading to misalignment in data pairs. Our theoretical analysis demonstrates that, under mild assumptions, the representations learned by MMCL capture exactly the information related to the subset of the semantic variables invariant to selection and perturbation biases. This provides a unified perspective for understanding misalignment. Based on this, we further offer actionable insights into how misalignment should inform the design of real-world ML systems. We validate our theoretical findings via extensive empirical studies on both synthetic data and real image-text datasets, shedding light on the nuanced impact of cross-modal misalignment on multimodal representation learning.
+       While InfoNCE powers modern contrastive learning, its geometric mechanisms remain under-characterized beyond the canonical alignment–uniformity decomposition.
+      We present a measure-theoretic framework that models learning as the evolution of representation measures on a fixed embedding manifold.
+      By establishing value and gradient consistency in the large-batch limit, we bridge the stochastic objective to explicit deterministic energy landscapes,
+      uncovering a fundamental geometric bifurcation between the unimodal and multimodal regimes.
+      In the unimodal setting, the intrinsic landscape is strictly convex with a unique Gibbs equilibrium; here, entropy acts merely as a tie-breaker,
+      clarifying “uniformity” as a constrained expansion within the alignment basin.
+      In contrast, the symmetric multimodal objective contains a persistent negative symmetric divergence term that remains even after kernel sharpening.
+      We show that this term induces barrier-driven co-adaptation, enforcing a population-level modality gap as a structural geometric necessity rather than an initialization artifact.
+      Our results shift the analytical lens from pointwise discrimination to population geometry, offering a principled basis for diagnosing and controlling distributional misalignment.
     </p>
   </div>
 </div>
@@ -131,103 +136,222 @@
   <div class="section-highlight">
     <h2 class="title is-3 has-text-centered">Key Contributions</h2>
     <ul class="content" style="font-size:1.12em;">
-      <li>📌 Formalize cross-modal misalignment via a latent variable model with selection and perturbation biases.</li>
-      <li>📌 Prove MMCL block-identifies only the unbiased shared semantic variables, regardless of latent causal structure.</li>
-      <li>📌 Derive practical implications for foundation model pretraining and out-of-distribution robustness.</li>
-      <li>📌 Validate our theory through simulations, real datasets (MPI3D, Causal3DIdent), and an OpenCLIP case study.</li>
+      <li>📌 Prove large-batch <strong>value &amp; gradient consistency</strong>, connecting stochastic InfoNCE to deterministic energy landscapes (Thms. 3.1, 4.1).</li>
+      <li>📌 Characterize unimodal InfoNCE as a <strong>strictly convex</strong> intrinsic functional with a <strong>unique Gibbs equilibrium</strong>; “uniformity” becomes an entropic tie-breaker within the alignment basin (Thm. 3.2; Props. 3.2–3.3).</li>
+      <li>📌 Identify a <strong>persistent negative symmetric divergence</strong> in symmetric multimodal InfoNCE that survives kernel sharpening and drives barrier-driven co-adaptation (Thm. 4.2; Prop. 4.2).</li>
+      <li>📌 Show <strong>parametric inheritance</strong>: under sufficient encoder expressiveness, learned representations inherit the intrinsic geometry (Cors. 3.1, 4.1).</li>
     </ul>
   </div>
 </div>
 
 <!-- Motivation (IN BOX) -->
-<div class="container is-max-desktop">
+<!-- <div class="container is-max-desktop">
   <div class="section-plain">
     <h2 class="title is-3 has-text-centered">Motivation</h2>
     <p class="content">
-      Multimodal contrastive learning aligns image and text embeddings. But captions often omit or distort semantics. Surprisingly, this misalignment sometimes helps rather than hurts—enhancing robustness. Our work seeks to understand and leverage this paradox.
+      Existing lenses often emphasize pointwise discrimination or static equilibria.
+      We instead analyze InfoNCE as an evolution of <em>representation laws</em> on a fixed embedding manifold:
+      the softmax denominator becomes a population partition field, and training tracks deterministic descent directions in the large-batch regime.
+      This exposes a sharp unimodal/multimodal geometric bifurcation and yields a principled explanation of the modality gap.
+    </p>
+  </div>
+</div> -->
+
+
+<!-- Framework -->
+<div class="container is-max-desktop">
+  <div class="section-plain">
+    <h2 class="title is-3 has-text-centered">Framework</h2>
+    <p class="content">
+      We model the embedding space <strong>Z</strong> as a compact geometric container with a reference volume measure.
+      Encoders push data distributions forward to induce representation measures and positive-pair laws, and InfoNCE becomes an energy functional combining
+      <strong>alignment potentials</strong> (from positives) and <strong>entropic dispersion</strong> (from negatives).
+    </p>
+
+    <!-- Optional: replace with your exported Fig. 1 / roadmap diagram -->
+    <figure class="image">
+      <img src="static/images/overview.png" alt="Analytical roadmap / overview" style="max-width: 820px; margin:auto;">
+    </figure>
+    <div class="figure-caption">
+      The geometric bifurcation of contrastive representation learning. 
+    </div>
+
+    <p class="content">
+      <strong>Main takeaway:</strong> unimodal InfoNCE admits a Gibbs-type equilibrium dictated by a strictly convex intrinsic landscape,
+      whereas symmetric multimodal InfoNCE contains a structural repulsive divergence term that makes exact marginal matching a knife-edge condition.
     </p>
   </div>
 </div>
 
 
-
-<!-- Theoretical Framework -->
-<div class="container is-max-desktop">
-  <div class="section-highlight">
-  <h2 class="title is-3 has-text-centered">Theoretical Framework</h2>
-      <p class="content">
-        We introduce a latent variable model where each modality is generated from shared semantics with modality-specific biases. We define:
-      </p>
-      <ul>
-        <li><strong>Selection Bias (θ):</strong> select only certain semantic coordinates 𝕀_𝜃 ⊆ 𝕀_𝐬 from text (e.g., shape, color).
-      </li>
-        <li><strong>Perturbation Bias (ρ):</strong> corrupts or flips certain selected semantic coordinates 𝕀_𝜌 ⊂ 𝕀_𝜃 (e.g., color).</li>
-      </ul>
-      <br><br>
-      <figure class="image">
-        <img src="static/images/lvm.png" alt="LVM Diagram" style="max-width: 720px; margin:auto;">
-      </figure>
-      <div class="figure-caption">
-         Illustration of the latent variable model (left), with misalignment across modalities modeled via selection and perturbation bias. Example image-text pairs (right) illustrate the misalignment induced by these two biases.
-      </div>
-      <p class="content">
-        <strong>Main Result (informal):</strong> Multimodal contrastive learning, when equipped with the correct representational bottleneck (i.e., feature size), consistently identifies unbiased shared semantics under cross-modal misalignment, irrespective of the latent causal structure.
-      </p>
-      <p>
-        <strong> Practical Guidance:</strong> (1) For large-scale pretraining: When domain shift is not an issue, rich, faithful captions maximize semantics and boost task generalization. (2) For robust adaptation: Omit or perturb environment-specific/sensitive cues to enforce invariance/ethics, using misalignment as regularization.
-      </p>
-  </div>
-</div>
 
 <!-- Empirical Validation (IN BOX) -->
 <div class="container is-max-desktop">
-  <div class="section-plain">
-    <h2 class="title is-3 has-text-centered">Empirical Validation</h2>
-    <p class="content">
-      We validate our theory on Causal3DIdent, MPI3D, and OpenCLIP. Results confirm that misalignment shapes concept awareness -- Increasing selection or perturbation bias systematically reduces performance on biased concepts while leaving invariant ones stable. See full results in the <a href="https://arxiv.org/pdf/2504.10143" target="_blank">paper</a>.
-    </p>
-  </div>
-</div>
-
-<!-- OpenCLIP Case Study -->
-<div class="container is-max-desktop">
   <div class="section-highlight">
-    <h2 class="title is-3 has-text-centered">OpenCLIP Case Study</h2>
-    <p class="content">
-      We evaluate OpenCLIP on 146 visual concepts across 15 groups. Performance drops sharply on under-captioned groups like <em>Stereotype</em> and <em>Emotion</em>, confirming that annotation frequency governs learned awareness. Captions act as epistemic filters—prioritizing some semantics over others.
-    </p>
-    <figure class="image">
-      <img src="static/images/casestudy.png" alt="OpenCLIP F1 performance by concept group" style="max-width: 720px; margin:auto;">
-    </figure>
-    <div class="figure-caption">
-      LAION-400M captions coverage rate and OpenCLIP zero-shot performance across concept groups.
+    <h2 class="title is-3 has-text-centered">Numerical Validations</h2>
+
+    <div class="tldr-card" style="margin-top:1rem; margin-bottom:1.6rem;">
+      <p class="has-text-centered is-size-5" style="margin-bottom:0;">
+        🔬 <strong>Mechanism checks:</strong>
+        (i) large-batch SGD follows a deterministic InfoNCE energy;
+        (ii) unimodal InfoNCE converges to a unique Gibbs equilibrium;
+        (iii) multimodal InfoNCE exhibits a divergence-driven <em>structural modality gap</em> under heterogeneous conditionals.
+      </p>
+    </div>
+
+    <!-- A compact "what we verify" table -->
+    <div class="table-container" style="margin-top: 0.5rem;">
+      <table class="table is-fullwidth is-striped is-hoverable" style="font-size: 0.98rem;">
+        <thead>
+          <tr>
+            <th style="width: 32%;">Prediction / Claim</th>
+            <th style="width: 40%;">Observable Signature</th>
+            <th style="width: 28%;">Where</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Large-batch consistency</strong></td>
+            <td>Stochastic gradient aligns with the deterministic energy gradient as batch size grows.</td>
+            <td>Figures below · App. D.1</td>
+          </tr>
+          <tr>
+            <td><strong>Unimodal strict convexity</strong></td>
+            <td>Single stable equilibrium; low temperature yields concentration near the Gibbs minimizer.</td>
+            <td>Figures below · App. D.2</td>
+          </tr>
+          <tr>
+            <td><strong>Multimodal negative symmetric divergence</strong></td>
+            <td>Persistent divergence term; exact marginal matching is knife-edge; stable gap under misalignment.</td>
+            <td>Figures below · App. D.3</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 3 validation cards -->
+    <div class="columns is-multiline" style="margin-top: 0.5rem;">
+
+      <!-- Card 1: Large-batch gradient consistency -->
+      <div class="column is-12">
+        <div class="box" style="border-radius: 1.25rem; box-shadow: 0 1px 12px rgba(60,60,60,0.07);">
+          <h3 class="title is-4" style="margin-bottom: 0.6rem;">1) Large-batch gradient consistency</h3>
+          <p class="content" style="margin-bottom: 1rem;">
+            We compare the stochastic InfoNCE gradient (finite batch) with the deterministic energy gradient
+            predicted by our large-batch limit. As batch size increases, the gradients become increasingly aligned,
+            and the relative error shrinks—supporting value &amp; gradient consistency.
+          </p>
+
+          <figure class="image">
+            <img src="static/images/grad_consist.png" alt="Gradient alignment vs batch size" style="max-width: 820px; margin:auto;">
+          </figure>
+          <div class="figure-caption">
+            <strong>Cosine alignment & Relative gradient error</strong> between stochastic and deterministic gradients vs batch size.
+          </div>
+
+          <div class="content" style="margin-top: 0.5rem;">
+            <ul>
+              <li><strong>What to show:</strong> monotone improvement with batch size.</li>
+              <li><strong>Takeaway:</strong> training dynamics are governed by the deterministic energy in the large-batch regime.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Unimodal Gibbs equilibrium & concentration -->
+      <div class="column is-12">
+        <div class="box" style="border-radius: 1.25rem; box-shadow: 0 1px 12px rgba(60,60,60,0.07);">
+          <h3 class="title is-4" style="margin-bottom: 0.6rem;">2) Unimodal: unique Gibbs equilibrium &amp; low-temperature concentration</h3>
+          <p class="content" style="margin-bottom: 1rem;">
+            In the unimodal regime, the intrinsic functional is strictly convex with a unique stable Gibbs equilibrium.
+            Numerically, trajectories converge to the same terminal law across initializations; decreasing temperature produces
+            sharper concentration inside the alignment basin rather than “uniformity for its own sake”.
+          </p>
+
+          <figure class="image has-text-centered">
+            <img
+              src="static/images/uni_train_s2_potential_overlay_evolution.gif"
+              alt="Unimodal hypersphere distribution animation"
+              style="max-width: 820px; width: 100%; border-radius: 12px; margin: auto; display: block;"
+            >
+          </figure>
+
+          <div class="figure-caption">
+            <strong>Unimodal hypersphere distribution animation.</strong>
+          </div>
+
+          <div class="content" style="margin-top: 0.5rem;">
+            <ul>
+              <li><strong>What to show:</strong> A density visualization under various temperature settings.</li>
+              <li><strong>Takeaway:</strong> unimodal “uniformity” is an entropic tie-breaker constrained by the alignment potential.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Multimodal structural gap under heterogeneous conditionals -->
+      <div class="column is-12">
+        <div class="box" style="border-radius: 1.25rem; box-shadow: 0 1px 12px rgba(60,60,60,0.07);">
+          <h3 class="title is-4" style="margin-bottom: 0.6rem;">
+            3) Multimodal: divergence-driven structural modality gap
+          </h3>
+
+          <p class="content" style="margin-bottom: 1rem;">
+            In the multimodal regime with heterogeneous conditionals, the symmetric objective contains a
+            <strong>negative symmetric divergence</strong> that persists after kernel sharpening. Numerically, this manifests as a stable
+            population-level separation between learned marginals (a “modality gap”) that grows with misalignment and does not vanish
+            with longer training.
+          </p>
+
+          <!-- Single centered animated visualization -->
+          <div class="columns is-centered">
+            <div class="column is-10-desktop is-12-tablet">
+              <figure class="image has-text-centered">
+                <!-- Put your gif here -->
+                <img
+                  src="static/images/mm_joint_cosine_anim_grid_2x4_individual_cbars.gif"
+                  alt="Animated joint-angle coupling during training"
+                  style="border-radius: 12px; width: 100%; height: auto;"
+                >
+              </figure>
+
+              <div class="figure-caption">
+                <strong>Animated joint-angle coupling</strong> (1 frame per 10 steps).
+                The diagonal concentration indicates improved pairwise coupling, while persistent off-diagonal mass reflects
+                mismatch-induced structure that does not disappear with longer training.
+              </div>
+            </div>
+          </div>
+
+          <div class="content" style="margin-top: 0.8rem;">
+            <ul>
+              <li><strong>What to look for:</strong> how the joint mass evolves over training; whether it concentrates on the diagonal; and whether residual spread persists under misalignment.</li>
+              <li><strong>Takeaway:</strong> the modality gap is a <em>structural</em> geometric consequence of symmetric multimodal training under mismatched conditionals.</li>
+            </ul>
+          </div>
+
+          <p class="content" style="margin-top: 0.8rem;">
+            For full setup details (models, temperatures, batch sizes, seeds), see Appendix D of the paper.
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
-<!-- Key Takeaways (IN BOX) -->
+<!-- Key Takeaways -->
 <div class="container is-max-desktop">
-  <div class="section-plain">
+  <div class="section-highlight">
     <h2 class="title is-3 has-text-centered">Key Takeaways</h2>
     <ul class="content" style="font-size:1.1em;">
-      <li><strong>📌 Unified Theory:</strong> MMCL identifies only unbiased shared semantics under misalignment.</li>
-      <li><strong>📌 Bias as Signal:</strong> Misalignment encodes implicit value structures in human annotation.</li>
-      <li><strong>📌 Open Directions:</strong> Model emergent semantics, random missingness, and linear identifiability.</li>
-      <li><strong>📌 Connection to prior work:</strong>  <a href="https://yichaocai.com/clap_paper.github.io" target="_blank">CLAP</a> naturally arises as a special case of our Corollary 4.2.</li>
+      <li><strong>📌 Deterministic limit:</strong> large-batch InfoNCE tracks an explicit energy landscape.</li>
+      <li><strong>📌 Unimodal geometry:</strong> strict convexity implies a unique stable Gibbs equilibrium; uniformity is secondary entropy within the alignment basin.</li>
+      <li><strong>📌 Multimodal geometry:</strong> a negative symmetric divergence erects a repulsive barrier, making the modality gap an intrinsic geometric state.</li>
+      <li><strong>📌 Practical implication:</strong> closing the gap requires explicitly regularizing cross-modal divergence—not just improving initialization or sampling.</li>
     </ul>
   </div>
 </div>
-
-<!-- Broader Impacts -->
-<div class="container is-max-desktop">
-  <div class="section-highlight">
-    <h2 class="title is-3 has-text-centered">Misalignment ≠ Noise: It’s an Epistemic Filter</h2>
-    <p class="content">
-      Our work supports a modern view of linguistic relativity: captions shape the conceptual space that models represent. Annotation choices reflect epistemic and ethical values. By treating annotation as a value-laden act, we can align learned representations with human priorities.
-    </p>
-  </div>
-</div>
-
 
 <!-- BibTeX -->
 <section class="section">
@@ -235,13 +359,21 @@
     <div class="bibtex-card">
       <span class="bibtex-label">
         📚 Cite this paper:
-        <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('bibtex-code').innerText);this.innerText='Copied!';setTimeout(()=>this.innerText='Copy',1300);">Copy</button>
+        <button class="copy-btn"
+          onclick="navigator.clipboard.writeText(document.getElementById('bibtex-code').innerText);this.innerText='Copied!';setTimeout(()=>this.innerText='Copy',1300);">
+          Copy
+        </button>
       </span>
-      <pre class="bibtex-pre"><code id="bibtex-code">@inproceedings{cai2025misalignment,
-  title     = {On the Value of Cross-Modal Misalignment in Multimodal Representation Learning},
-  author    = {Cai, Yichao and Liu, Yuhang and Gao, Erdun and Jiang, Tianjiao and Zhang, Zhen and van den Hengel, Anton and Shi, Javen Qinfeng},
-  booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
-  year      = {2025}
+
+      <pre class="bibtex-pre"><code id="bibtex-code">@misc{cai2026geometric,
+  title        = {The Geometric Mechanics of Contrastive Representation Learning: Alignment Potentials, Entropic Dispersion, and Cross-Modal Divergence},
+  author       = {Cai, Yichao and Zhang, Zhen and Liu, Yuhang and Shi, Javen Qinfeng},
+  year         = {2026},
+  eprint       = {2601.19597},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.LG},
+  doi          = {10.48550/arXiv.2601.19597},
+  url          = {https://arxiv.org/abs/2601.19597}
 }</code></pre>
     </div>
   </div>
@@ -252,8 +384,11 @@
 <footer class="footer">
   <div class="content has-text-centered">
     <p>
-      © 2025 Yichao Cai | Based on the <a href="https://nerfies.github.io">Nerfies</a> template. 
-      Licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+      © 2026 Yichao Cai | Based on the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> template.
+      Licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
     </p>
   </div>
 </footer>
+
+</body>
+</html>
