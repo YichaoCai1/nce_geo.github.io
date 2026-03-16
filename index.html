@@ -1,372 +1,622 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="We develop a measure-theoretic framework for InfoNCE, bridging stochastic training to deterministic energy landscapes and revealing a geometric bifurcation between unimodal and multimodal contrastive learning.">
-  <meta property="og:title" content="The Geometric Mechanics of Contrastive Representation Learning"/>
-  <meta property="og:description" content="Large-batch deterministic energies; unimodal strict convexity with a unique Gibbs equilibrium; multimodal negative symmetric divergence yields a structural modality gap."/>
+  <meta name="description" content="A measure-theoretic analysis of InfoNCE showing a geometric bifurcation between unimodal and symmetric multimodal contrastive learning.">
+  <meta property="og:title" content="The Geometric Mechanics of Contrastive Learning"/>
+  <meta property="og:description" content="Large-batch deterministic energies, unimodal Gibbs geometry, and divergence-coupled multimodal modality gap."/>
   <meta property="og:url" content="https://yichaocai.com/nce_geo/"/>
-  <!-- FontAwesome 5 via CDN for all icons (PDF, GitHub, etc) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <!-- Academicons for arXiv -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,
-  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>
-    <path d='M3 7h6l4 4h8'/>
-    <path d='M21 17h-6l-4-4H3'/>
-    <polyline points='17 3 21 7 17 11'/>
-    <polyline points='7 13 3 17 7 21'/>
-  </svg>">
-  <meta property="og:image" content="static/images/og.png" />
-  <meta property="og:image:width" content="1200"/>
-  <meta property="og:image:height" content="630"/>
-  <meta name="twitter:title" content="The Geometric Mechanics of Contrastive Representation Learning">
-  <meta name="twitter:description" content="A measure-theoretic framework for InfoNCE geometry: deterministic energies, unimodal convexity, and multimodal divergence-driven modality gap.">
+  <meta property="og:image" content="static/images/og.png"/>
+  <meta name="twitter:title" content="The Geometric Mechanics of Contrastive Learning">
+  <meta name="twitter:description" content="A geometric analysis of InfoNCE from deterministic limits to modality gaps.">
   <meta name="twitter:image" content="static/images/og.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="keywords" content="Contrastive Learning, InfoNCE, Representation Learning Theory, Modality Gap">
+  <meta name="keywords" content="Contrastive Learning, InfoNCE, Representation Learning Theory, Modality Gap, CLIP">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Geometric Mechanics of Contrastive Representation Learning</title>
+  <title>The Geometric Mechanics of Contrastive Learning</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="static/css/index.css">
+
   <style>
-    .tldr-card {
-      background: linear-gradient(90deg, #f5f7fa, #fff9c4 70%, #fff8b0 100%);
-      border-radius: 1.25rem;
-      box-shadow: 0 2px 16px 0 rgba(60, 60, 60, 0.10);
-      padding: 2rem 2.5rem;
-      margin: 2.5rem 0 2.5rem 0;
-      border: 1px solid #f5eebd;
+    :root {
+      --ink: #1f2937;
+      --muted: #64748b;
+      --line: #e5e7eb;
+      --soft: #f8fafc;
+      --soft-warm: #fffdf7;
+      --accent: #334155;
+      --accent-2: #0f766e;
+      --accent-3: #7c3aed;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+      --radius: 20px;
     }
-    .section-highlight {
-      background: #f8fafc;
-      border-radius: 1.25rem;
-      box-shadow: 0 1px 12px 0 rgba(60,60,60,0.07);
-      padding: 2rem 1.5rem;
-      margin-bottom: 2rem;
+
+    html { scroll-behavior: smooth; }
+    body {
+      color: var(--ink);
+      background: #ffffff;
+      font-family: 'Noto Sans', sans-serif;
     }
-    .figure-caption {
-      font-size: 1rem;
-      color: #8a8a8a;
-      margin-top: 0.25rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
+    .title, .subtitle, h1, h2, h3 {
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      color: #111827;
+    }
+    .paper-title {
+      line-height: 1.14;
+      letter-spacing: -0.02em;
+    }
+    .hero-shell {
+      background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .hero-summary {
+      font-size: 1.15rem;
+      color: #334155;
+      max-width: 56rem;
+      margin: 1rem auto 0;
+    }
+    .hero-note {
+      margin-top: 1rem;
+      color: var(--muted);
+      font-size: 0.98rem;
+      max-width: 56rem;
+      margin-left: auto;
+      margin-right: auto;
     }
     .publication-links .button {
-      margin: 0.25rem 0.5rem;
+      margin: 0.3rem 0.4rem;
+      border-radius: 999px;
+      box-shadow: none;
     }
-    @media (max-width: 800px) {
-      .tldr-card, .section-highlight { padding: 1.2rem 1rem; }
+    .section-wrap {
+      padding: 0 1rem;
+    }
+    .panel {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.6rem;
+    }
+    .panel.soft {
+      background: var(--soft);
+    }
+    .panel.warm {
+      background: var(--soft-warm);
+    }
+    .section-kicker {
+      color: var(--accent-2);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.55rem;
+    }
+    .section-title {
+      margin-bottom: 0.6rem !important;
+    }
+    .section-copy {
+      color: #374151;
+      font-size: 1.03rem;
+    }
+    .claim-strip {
+      background: linear-gradient(90deg, #f8fafc 0%, #fffef8 100%);
+      border: 1px solid #edf2f7;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.35rem 1.5rem;
+    }
+    .claim-strip strong {
+      color: #111827;
+    }
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .mini-card {
+      border: 1px solid var(--line);
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 1.15rem 1.1rem;
+      height: 100%;
+    }
+    .mini-card h3 {
+      font-size: 1.03rem;
+      margin-bottom: 0.45rem;
+    }
+    .mini-card p {
+      color: #475569;
+      font-size: 0.98rem;
+      margin: 0;
+    }
+    .figure-frame {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .figure-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .figure-caption {
+      font-size: 0.98rem;
+      color: #5b6472;
+      line-height: 1.55;
+      padding: 0.95rem 1.1rem 1.1rem;
+      background: #ffffff;
+    }
+    .figure-label {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent-3);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+    .story-row {
+      margin-top: 1.25rem;
+    }
+    .story-card {
+      height: 100%;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 1.2rem;
+    }
+    .story-card .step {
+      display: inline-flex;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: white;
+      background: #0f766e;
+      margin-bottom: 0.8rem;
+    }
+    .story-card p {
+      color: #475569;
+      margin-bottom: 0;
+    }
+    .split-note {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-top: 0.6rem;
+    }
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.15rem;
+    }
+    .bullets-clean {
+      padding-left: 1.15rem;
+      color: #475569;
+    }
+    .bullets-clean li { margin-bottom: 0.45rem; }
+    .bibtex-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      background: #ffffff;
+    }
+    .bibtex-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      background: #f8fafc;
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+    }
+    .copy-btn {
+      border: none;
+      background: #111827;
+      color: white;
+      border-radius: 999px;
+      padding: 0.5rem 0.9rem;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .bibtex-pre {
+      margin: 0;
+      padding: 1rem 1.1rem 1.2rem;
+      background: white;
+      overflow-x: auto;
+      font-size: 0.95rem;
+    }
+    .footer {
+      background: #fafafa;
+      border-top: 1px solid #eef2f7;
+    }
+    .small-muted {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    @media (max-width: 900px) {
+      .mini-grid, .results-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
-<!-- Header: Split, Clean -->
-<section class="section" style="padding-bottom:0;">
-  <div class="container is-max-desktop">
-    <div class="columns is-vcentered is-multiline">
-      <div class="column is-8-desktop is-12-mobile">
-        <h1 class="title is-1" style="line-height:1.2;">The Geometric Mechanics of Contrastive Representation Learning</h1>
-        <div class="is-size-5">
-          <span class="author-block"><a href="https://yichaocai.com/" target="_blank">Yichao Cai</a>, </span>
-          <span class="author-block"><a href="https://zzhang.org/" target="_blank">Zhen Zhang</a>, </span>
-          <span class="author-block"><a href="https://sites.google.com/view/yuhangliu/homepage" target="_blank">Yuhang Liu</a>, </span>
-          <span class="author-block"><a href="https://cs.adelaide.edu.au/~javen/" target="_blank">Javen Qinfeng Shi</a></span>
-        </div>
-        <div class="is-size-6" style="margin-top:0.5em;">
-          <span class="author-block">Australian Institute for Machine Learning (AIML), Adelaide University</span>
-        </div>
+
+  <!-- ========================= -->
+  <!-- Hero                      -->
+  <!-- ========================= -->
+  <section class="section hero-shell" style="padding-top:2.5rem; padding-bottom:2.2rem;">
+    <div class="container is-max-desktop has-text-centered section-wrap">
+      <div class="hero-badge">
+        <span><i class="fas fa-circle-notch"></i></span>
+        <span>Preprint · 2026</span>
       </div>
-      <div class="column is-4-desktop is-12-mobile has-text-centered">
-        <div class="publication-links" style="margin-top:1rem;">
-          <a href="https://github.com/YichaoCai1/InfoNCE_Geometry" target="_blank" class="external-link button is-normal is-rounded is-dark">
-            <span class="icon"><i class="fab fa-github"></i></span>
-            <span>Code</span>
-          </a>
-          <a href="https://arxiv.org/abs/2601.19597" target="_blank" class="external-link button is-normal is-rounded is-dark">
-            <span class="icon"><i class="ai ai-arxiv"></i></span>
-            <span>arXiv</span>
-          </a>
-          <a href="https://arxiv.org/pdf/2601.19597" target="_blank" class="external-link button is-normal is-rounded is-info">
-            <span class="icon"><i class="fas fa-file-pdf"></i></span>
-            <span>Download PDF</span>
-          </a>
-          <a href="#" target="_blank" class="external-link button is-normal is-rounded venue-btn">
-            <span class="icon"><i class="fas fa-award"></i></span>
-            <span>Preprint 2026</span>
-          </a>
-        </div>
+
+      <h1 class="title is-1 paper-title">The Geometric Mechanics of Contrastive Learning</h1>
+      <p class="subtitle is-5" style="max-width: 58rem; margin: 1rem auto 0.25rem; color:#334155;">
+        A measure-theoretic view of InfoNCE: from large-batch deterministic energies to unimodal Gibbs geometry and divergence-coupled multimodal modality gaps.
+      </p>
+
+      <div class="is-size-5" style="margin-top:1rem;">
+        <span class="author-block"><a href="https://yichaocai.com/" target="_blank">Yichao Cai</a>, </span>
+        <span class="author-block"><a href="https://zzhang.org/" target="_blank">Zhen Zhang</a>, </span>
+        <span class="author-block"><a href="https://sites.google.com/view/yuhangliu/homepage" target="_blank">Yuhang Liu</a>, </span>
+        <span class="author-block"><a href="https://cs.adelaide.edu.au/~javen/" target="_blank">Javen Qinfeng Shi</a></span>
       </div>
-    </div>
-  </div>
-</section>
+      <div class="is-size-6" style="margin-top:0.5rem; color:#64748b;">
+        Australian Institute for Machine Learning (AIML), Adelaide University
+      </div>
 
-<!-- TLDR Card -->
-<div class="container is-max-desktop">
-  <div class="tldr-card">
-    <p class="has-text-centered is-size-5" style="margin-bottom:0;">
-      ✨ <strong>TL;DR:</strong> We identify a geometric bifurcation in contrastive learning: Unimodal InfoNCE yields a unique convex Gibbs equilibrium, while Multimodal is coupled by a negative symmetric divergence driving "winner-take-all" dynamics, imposing the modality gap.
-    </p>
-  </div>
-</div>
+      <div class="publication-links" style="margin-top:1.3rem;">
+        <a href="https://github.com/YichaoCai1/InfoNCE_Geometry" target="_blank" class="external-link button is-dark is-rounded">
+          <span class="icon"><i class="fab fa-github"></i></span>
+          <span>Code</span>
+        </a>
+        <a href="https://arxiv.org/abs/2601.19597" target="_blank" class="external-link button is-dark is-rounded">
+          <span class="icon"><i class="ai ai-arxiv"></i></span>
+          <span>arXiv</span>
+        </a>
+        <a href="https://arxiv.org/pdf/2601.19597" target="_blank" class="external-link button is-info is-rounded">
+          <span class="icon"><i class="fas fa-file-pdf"></i></span>
+          <span>PDF</span>
+        </a>
+        <a href="#bibtex" class="external-link button is-light is-rounded">
+          <span class="icon"><i class="fas fa-quote-right"></i></span>
+          <span>BibTeX</span>
+        </a>
+      </div>
 
-<!-- Abstract -->
-<div class="container is-max-desktop">
-  <div class="section-plain">
-    <h2 class="title is-3 has-text-centered">Abstract</h2>
-    <p class="content has-text-justified">
-       While InfoNCE powers modern contrastive learning, its geometric mechanisms remain under-characterized beyond the canonical alignment–uniformity decomposition.
-      We present a measure-theoretic framework that models learning as the evolution of representation measures on a fixed embedding manifold.
-      By establishing value and gradient consistency in the large-batch limit, we bridge the stochastic objective to explicit deterministic energy landscapes,
-      uncovering a fundamental geometric bifurcation between the unimodal and multimodal regimes.
-      In the unimodal setting, the intrinsic landscape is strictly convex with a unique Gibbs equilibrium; here, entropy acts merely as a tie-breaker,
-      clarifying “uniformity” as a constrained expansion within the alignment basin.
-      In contrast, the symmetric multimodal objective contains a persistent negative symmetric divergence term that remains even after kernel sharpening.
-      We show that this term induces barrier-driven co-adaptation, enforcing a population-level modality gap as a structural geometric necessity rather than an initialization artifact.
-      Our results shift the analytical lens from pointwise discrimination to population geometry, offering a principled basis for diagnosing and controlling distributional misalignment.
-    </p>
-  </div>
-</div>
-
-<!-- Key Contributions -->
-<div class="container is-max-desktop">
-  <div class="section-highlight">
-    <h2 class="title is-3 has-text-centered">Key Contributions</h2>
-    <ul class="content" style="font-size:1.12em;">
-      <li>📌 Prove large-batch <strong>value &amp; gradient consistency</strong>, connecting stochastic InfoNCE to deterministic energy landscapes (Thms. 3.1, 4.1).</li>
-      <li>📌 Characterize unimodal InfoNCE as a <strong>strictly convex</strong> intrinsic functional with a <strong>unique Gibbs equilibrium</strong>; “uniformity” becomes an entropic tie-breaker within the alignment basin (Thm. 3.2; Props. 3.2–3.3).</li>
-      <li>📌 Identify a <strong>persistent negative symmetric divergence</strong> in symmetric multimodal InfoNCE that survives kernel sharpening and drives barrier-driven co-adaptation (Thm. 4.2; Prop. 4.2).</li>
-      <li>📌 Show <strong>parametric inheritance</strong>: under sufficient encoder expressiveness, learned representations inherit the intrinsic geometry (Cors. 3.1, 4.1).</li>
-    </ul>
-  </div>
-</div>
-
-<!-- Motivation (IN BOX) -->
-<!-- <div class="container is-max-desktop">
-  <div class="section-plain">
-    <h2 class="title is-3 has-text-centered">Motivation</h2>
-    <p class="content">
-      Existing lenses often emphasize pointwise discrimination or static equilibria.
-      We instead analyze InfoNCE as an evolution of <em>representation laws</em> on a fixed embedding manifold:
-      the softmax denominator becomes a population partition field, and training tracks deterministic descent directions in the large-batch regime.
-      This exposes a sharp unimodal/multimodal geometric bifurcation and yields a principled explanation of the modality gap.
-    </p>
-  </div>
-</div> -->
-
-
-<!-- Framework -->
-<div class="container is-max-desktop">
-  <div class="section-plain">
-    <h2 class="title is-3 has-text-centered">Framework</h2>
-    <p class="content">
-      We model the embedding space <strong>Z</strong> as a compact geometric container with a reference volume measure.
-      Encoders push data distributions forward to induce representation measures and positive-pair laws, and InfoNCE becomes an energy functional combining
-      <strong>alignment potentials</strong> (from positives) and <strong>entropic dispersion</strong> (from negatives).
-    </p>
-
-    <!-- Optional: replace with your exported Fig. 1 / roadmap diagram -->
-    <figure class="image">
-      <img src="static/images/overview.png" alt="Analytical roadmap / overview" style="max-width: 820px; margin:auto;">
-    </figure>
-    <div class="figure-caption">
-      The geometric bifurcation of contrastive representation learning. 
-    </div>
-
-    <p class="content">
-      <strong>Main takeaway:</strong> unimodal InfoNCE admits a Gibbs-type equilibrium dictated by a strictly convex intrinsic landscape,
-      whereas symmetric multimodal InfoNCE contains a structural repulsive divergence term that makes exact marginal matching a knife-edge condition.
-    </p>
-  </div>
-</div>
-
-
-
-<!-- Empirical Validation (IN BOX) -->
-<div class="container is-max-desktop">
-  <div class="section-highlight">
-    <h2 class="title is-3 has-text-centered">Numerical Validations</h2>
-
-    <div class="tldr-card" style="margin-top:1rem; margin-bottom:1.6rem;">
-      <p class="has-text-centered is-size-5" style="margin-bottom:0;">
-        🔬 <strong>Mechanism checks:</strong>
-        (i) large-batch SGD follows a deterministic InfoNCE energy;
-        (ii) unimodal InfoNCE converges to a unique Gibbs equilibrium;
-        (iii) multimodal InfoNCE exhibits a divergence-driven <em>structural modality gap</em> under heterogeneous conditionals.
+      <p class="hero-summary">
+        <strong>Core claim.</strong> In the analyzed regime, unimodal InfoNCE induces a strictly convex Gibbs-type intrinsic landscape, whereas symmetric multimodal InfoNCE introduces a persistent negative symmetric divergence coupling that can structurally favor a modality gap under conditional heterogeneity.
       </p>
     </div>
+  </section>
 
-    <!-- A compact "what we verify" table -->
-    <div class="table-container" style="margin-top: 0.5rem;">
-      <table class="table is-fullwidth is-striped is-hoverable" style="font-size: 0.98rem;">
-        <thead>
-          <tr>
-            <th style="width: 32%;">Prediction / Claim</th>
-            <th style="width: 40%;">Observable Signature</th>
-            <th style="width: 28%;">Where</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>Large-batch consistency</strong></td>
-            <td>Stochastic gradient aligns with the deterministic energy gradient as batch size grows.</td>
-            <td>Figures below · App. D.1</td>
-          </tr>
-          <tr>
-            <td><strong>Unimodal strict convexity</strong></td>
-            <td>Single stable equilibrium; low temperature yields concentration near the Gibbs minimizer.</td>
-            <td>Figures below · App. D.2</td>
-          </tr>
-          <tr>
-            <td><strong>Multimodal negative symmetric divergence</strong></td>
-            <td>Persistent divergence term; exact marginal matching is knife-edge; stable gap under misalignment.</td>
-            <td>Figures below · App. D.3</td>
-          </tr>
-        </tbody>
-      </table>
+  <section class="section">
+    <div class="container is-max-desktop section-wrap">
+      <div class="claim-strip">
+        <p class="is-size-5" style="margin:0; line-height:1.65;">
+          <strong>Why this paper matters.</strong>
+          Contrastive learning is often summarized as “alignment plus uniformity,” but that view does not fully explain why cross-modal systems can align paired samples while still maintaining separated modality marginals. This work shifts the lens from pointwise discrimination to <strong>population geometry on the embedding manifold</strong>.
+        </p>
+      </div>
     </div>
+  </section>
 
-    <!-- 3 validation cards -->
-    <div class="columns is-multiline" style="margin-top: 0.5rem;">
+  <!-- ========================= -->
+  <!-- At a glance               -->
+  <!-- ========================= -->
+  <section class="section" style="padding-top:0.5rem;">
+    <div class="container is-max-desktop section-wrap">
+      <div class="panel soft">
+        <p class="section-kicker">Paper at a glance</p>
+        <h2 class="title is-3 section-title">A single roadmap for the full argument</h2>
+        <p class="section-copy">
+          The paper is easiest to understand if the reader sees the entire analytical pipeline first: finite-batch InfoNCE, large-batch deterministic energies, intrinsic variational lifting, and then the bifurcation between unimodal and multimodal geometries.
+        </p>
 
-      <!-- Card 1: Large-batch gradient consistency -->
-      <div class="column is-12">
-        <div class="box" style="border-radius: 1.25rem; box-shadow: 0 1px 12px rgba(60,60,60,0.07);">
-          <h3 class="title is-4" style="margin-bottom: 0.6rem;">1) Large-batch gradient consistency</h3>
-          <p class="content" style="margin-bottom: 1rem;">
-            We compare the stochastic InfoNCE gradient (finite batch) with the deterministic energy gradient
-            predicted by our large-batch limit. As batch size increases, the gradients become increasingly aligned,
-            and the relative error shrinks—supporting value &amp; gradient consistency.
-          </p>
-
-          <figure class="image">
-            <img src="static/images/grad_consist.png" alt="Gradient alignment vs batch size" style="max-width: 820px; margin:auto;">
-          </figure>
+        <!-- Use main paper Figure 1 exported from the PDF -->
+        <!-- Recommended file: static/images/fig1_pipeline.png -->
+        <div class="figure-frame" style="margin-top:1.15rem;">
+          <img src="static/images/figureone.svg" alt="Figure 1: unified analytical pipeline for contrastive learning geometry">
           <div class="figure-caption">
-            <strong>Cosine alignment & Relative gradient error</strong> between stochastic and deterministic gradients vs batch size.
-          </div>
-
-          <div class="content" style="margin-top: 0.5rem;">
-            <ul>
-              <li><strong>What to show:</strong> monotone improvement with batch size.</li>
-              <li><strong>Takeaway:</strong> training dynamics are governed by the deterministic energy in the large-batch regime.</li>
-            </ul>
+            Unified roadmap of the analysis: finite-batch InfoNCE, large-batch deterministic energies, intrinsic variational lifting, and the resulting bifurcation between unimodal and multimodal contrastive geometries.
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Card 2: Unimodal Gibbs equilibrium & concentration -->
-      <div class="column is-12">
-        <div class="box" style="border-radius: 1.25rem; box-shadow: 0 1px 12px rgba(60,60,60,0.07);">
-          <h3 class="title is-4" style="margin-bottom: 0.6rem;">2) Unimodal: unique Gibbs equilibrium &amp; low-temperature concentration</h3>
-          <p class="content" style="margin-bottom: 1rem;">
-            In the unimodal regime, the intrinsic functional is strictly convex with a unique stable Gibbs equilibrium.
-            Numerically, trajectories converge to the same terminal law across initializations; decreasing temperature produces
-            sharper concentration inside the alignment basin rather than “uniformity for its own sake”.
-          </p>
+  <!-- ========================= -->
+  <!-- Three main ideas          -->
+  <!-- ========================= -->
+  <section class="section" style="padding-top:0;">
+    <div class="container is-max-desktop section-wrap">
+      <div class="mini-grid">
+        <div class="mini-card">
+          <h3>1. Deterministic limit</h3>
+          <p>Large-batch InfoNCE is shown to track an explicit deterministic energy, making the training geometry analyzable at the level of induced measures.</p>
+        </div>
+        <div class="mini-card">
+          <h3>2. Unimodal cohesion</h3>
+          <p>In the unimodal regime, the intrinsic functional is strictly convex and yields a unique Gibbs equilibrium. Entropy acts as a tie-breaker inside the alignment basin.</p>
+        </div>
+        <div class="mini-card">
+          <h3>3. Multimodal bifurcation</h3>
+          <p>In symmetric multimodal InfoNCE, a negative symmetric divergence term changes the geometry qualitatively and can favor modality-level separation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <figure class="image has-text-centered">
-            <img
-              src="static/images/uni_train_s2_potential_overlay_evolution_1.gif"
-              alt="Unimodal hypersphere distribution animation"
-              style="max-width: 820px; width: 100%; border-radius: 12px; margin: auto; display: block;"
-            >
-          </figure>
+  <!-- ========================= -->
+  <!-- Abstract                  -->
+  <!-- ========================= -->
+  <section class="section" style="padding-top:0.5rem;">
+    <div class="container is-max-desktop section-wrap">
+      <div class="panel warm">
+        <p class="section-kicker">Abstract</p>
+        <h2 class="title is-3 section-title">Summary</h2>
+        <p class="section-copy">
+          InfoNCE-based contrastive learning is often characterized through alignment and uniformity, yet the induced population geometry remains only partially understood. We present a measure-theoretic framework in which encoders transport data laws to a fixed embedding manifold, and large-batch InfoNCE converges to explicit deterministic energies. This reveals a geometric bifurcation. In the unimodal regime, the intrinsic functional is strictly convex with a unique Gibbs equilibrium, clarifying uniformity as entropic dispersion within an alignment basin. In the symmetric multimodal regime, the intrinsic objective contains a persistent negative symmetric divergence coupling: each modality can act as a logarithmic barrier in the other’s effective landscape, so exact marginal matching becomes fragile under conditional heterogeneity. Controlled synthetic experiments and MS-COCO studies validate the predicted signatures.
+        </p>
+      </div>
+    </div>
+  </section>
 
-          <div class="figure-caption">
-            <strong>Unimodal hypersphere distribution animation.</strong>
+  <!-- ========================= -->
+  <!-- Theory-to-evidence        -->
+  <!-- ========================= -->
+  <section class="section" style="padding-top:0.5rem;">
+    <div class="container is-max-desktop section-wrap">
+      <div class="panel">
+        <p class="section-kicker">Theory to evidence</p>
+        <h2 class="title is-3 section-title">The four-step narrative</h2>
+        <div class="columns is-multiline story-row">
+          <div class="column is-6">
+            <div class="story-card">
+              <div class="step">1</div>
+              <h3 class="title is-5">Show the large-batch limit is real</h3>
+              <p>Before making geometric claims, the paper first verifies that finite-batch gradients align with the deterministic gradient predicted by theory.</p>
+            </div>
           </div>
-
-          <div class="content" style="margin-top: 0.5rem;">
-            <ul>
-              <li><strong>What to show:</strong> A density visualization under various temperature settings.</li>
-              <li><strong>Takeaway:</strong> unimodal “uniformity” is an entropic tie-breaker constrained by the alignment potential.</li>
-            </ul>
+          <div class="column is-6">
+            <div class="story-card">
+              <div class="step">2</div>
+              <h3 class="title is-5">Establish unimodal Gibbs geometry</h3>
+              <p>The next step is to show that the unimodal landscape is cohesive: a unique equilibrium exists and low temperature concentrates mass near aligned minima.</p>
+            </div>
+          </div>
+          <div class="column is-6">
+            <div class="story-card">
+              <div class="step">3</div>
+              <h3 class="title is-5">Expose the multimodal bifurcation</h3>
+              <p>The central contrast is that symmetric multimodal InfoNCE becomes divergence-coupled, so pairwise attraction can coexist with population-level repulsion.</p>
+            </div>
+          </div>
+          <div class="column is-6">
+            <div class="story-card">
+              <div class="step">4</div>
+              <h3 class="title is-5">Validate on real CLIP-like systems</h3>
+              <p>The final step tests whether the same signatures persist on realistic image-text embeddings and under controlled corruption on MS-COCO.</p>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Card 3: Multimodal structural gap under heterogeneous conditionals -->
-      <div class="column is-12">
-        <div class="box" style="border-radius: 1.25rem; box-shadow: 0 1px 12px rgba(60,60,60,0.07);">
-          <h3 class="title is-4" style="margin-bottom: 0.6rem;">
-            3) Multimodal: divergence-driven structural modality gap
-          </h3>
-
-          <p class="content" style="margin-bottom: 1rem;">
-            In the multimodal regime with heterogeneous conditionals, the symmetric objective contains a
-            <strong>negative symmetric divergence</strong> that persists after kernel sharpening. Numerically, this manifests as a stable
-            population-level separation between learned marginals (a “modality gap”) that grows with misalignment and does not vanish
-            with longer training.
-          </p>
-
-          <!-- Single centered animated visualization -->
-          <div class="columns is-centered">
-            <div class="column is-10-desktop is-12-tablet">
-              <figure class="image has-text-centered">
-                <!-- Put your gif here -->
-                <img
-                  src="static/images/mm_joint_cosine_anim_grid_2x4_individual_cbars.gif"
-                  alt="Animated joint-angle coupling during training"
-                  style="border-radius: 12px; width: 100%; height: auto;"
-                >
-              </figure>
-
+  <!-- ========================= -->
+  <!-- Results: deterministic    -->
+  <!-- ========================= -->
+  <section class="section" style="padding-top:0.5rem;">
+    <div class="container is-max-desktop section-wrap">
+      <div class="panel soft">
+        <p class="section-kicker">Result I</p>
+        <h2 class="title is-3 section-title">Large-batch InfoNCE tracks a deterministic energy</h2>
+        <div class="columns is-variable is-6">
+          <div class="column is-6">
+            <!-- Use main paper Figure 4 -->
+            <!-- Recommended file: static/images/fig4_grad_consistency.png -->
+            <div class="figure-frame">
+              <img src="static/images/large_batch_consistency.png" alt="Figure 4: large-batch gradient consistency">
               <div class="figure-caption">
-                <strong>Animated joint-angle coupling</strong> (1 frame per 10 steps).
-                The diagonal concentration indicates improved pairwise coupling, while persistent off-diagonal mass reflects
-                mismatch-induced structure that does not disappear with longer training.
+                Gradient alignment and relative gradient error between the stochastic InfoNCE objective and its deterministic large-batch counterpart improve as the number of negatives increases.
               </div>
             </div>
           </div>
-
-          <div class="content" style="margin-top: 0.8rem;">
-            <ul>
-              <li><strong>What to look for:</strong> how the joint mass evolves over training; whether it concentrates on the diagonal; and whether residual spread persists under misalignment.</li>
-              <li><strong>Takeaway:</strong> the modality gap is a <em>structural</em> geometric consequence of symmetric multimodal training under mismatched conditionals.</li>
+          <div class="column is-6">
+            <h3 class="title is-5">What this establishes</h3>
+            <p class="section-copy">
+              This result anchors the rest of the theory by showing that the deterministic-energy perspective is visible already at the level of practical finite-batch training.
+            </p>
+            <ul class="bullets-clean">
+              <li>Finite-batch contrastive gradients increasingly align with deterministic gradients.</li>
+              <li>The large-batch limit therefore captures the dominant training direction.</li>
+              <li>This justifies analyzing InfoNCE through induced energy landscapes on representation measures.</li>
             </ul>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <p class="content" style="margin-top: 0.8rem;">
-            For full setup details (models, temperatures, batch sizes, seeds), see Appendix D of the paper.
+  <!-- ========================= -->
+  <!-- Results: unimodal         -->
+  <!-- ========================= -->
+  <section class="section" style="padding-top:0.5rem;">
+    <div class="container is-max-desktop section-wrap">
+      <div class="panel">
+        <p class="section-kicker">Result II</p>
+        <h2 class="title is-3 section-title">Unimodal InfoNCE has a cohesive Gibbs-type geometry</h2>
+        <div class="results-grid" style="display: grid; grid-template-columns: 7fr 3fr; gap: 20px; align-items: start;">
+          <div>
+            <!-- Use main paper Figure 5 -->
+            <!-- Recommended file: static/images/fig5_unimodal_equilibrium.png -->
+            <div class="figure-frame">
+              <img src="static/images/uni_train_s2_potential_and_overlays.svg" alt="Figure 5: unimodal equilibria across temperature" style="width: 100%; height: auto;">
+              <div class="figure-caption">
+                Unimodal training evolves toward a Gibbs-type equilibrium shaped by the alignment potential; decreasing temperature concentrates mass more strongly near low-energy regions.
+              </div>
+            </div>
+          </div>
+          <div>
+            <!-- Use main paper Figure 2 as a secondary compact figure -->
+            <!-- Recommended file: static/images/fig2_cap_mass.png -->
+            <div class="figure-frame">
+              <img src="static/images/uni_train_concentration_vs_tau_s2.svg" alt="Figure 2: unimodal ground-state concentration" style="width: 94%; height: auto;">
+              <div class="figure-caption">
+                Quantitative view of unimodal low-temperature concentration: as temperature decreases, probability mass concentrates around near-minimizing regions of the alignment potential.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:1rem;">
+          <p class="section-copy">
+            The unimodal story should be presented as a contrastive baseline: the modality evaluates cross-entropy against its own smoothed density, which produces a <strong>strictly convex intrinsic free energy</strong> and a <strong>unique Gibbs equilibrium</strong>. This lets the page reinterpret “uniformity” more precisely as entropic dispersion inside an already aligned basin, rather than a generic global force fighting alignment.
           </p>
         </div>
       </div>
-
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- Key Takeaways -->
-<div class="container is-max-desktop">
-  <div class="section-highlight">
-    <h2 class="title is-3 has-text-centered">Key Takeaways</h2>
-    <ul class="content" style="font-size:1.1em;">
-      <li><strong>📌 Deterministic limit:</strong> large-batch InfoNCE tracks an explicit energy landscape.</li>
-      <li><strong>📌 Unimodal geometry:</strong> strict convexity implies a unique stable Gibbs equilibrium; uniformity is secondary entropy within the alignment basin.</li>
-      <li><strong>📌 Multimodal geometry:</strong> a negative symmetric divergence erects a repulsive barrier, making the modality gap an intrinsic geometric state.</li>
-      <li><strong>📌 Practical implication:</strong> closing the gap requires explicitly regularizing cross-modal divergence—not just improving initialization or sampling.</li>
-    </ul>
-  </div>
-</div>
+  <!-- ========================= -->
+  <!-- Results: multimodal       -->
+  <!-- ========================= -->
+  <section class="section" style="padding-top:0.5rem;">
+    <div class="container is-max-desktop section-wrap">
+      <div class="panel warm">
+        <p class="section-kicker">Result III</p>
+        <h2 class="title is-3 section-title">Symmetric multimodal InfoNCE bifurcates into a different geometry</h2>
+        <p class="section-copy" style="margin-bottom:1rem;">
+          This is the paper’s central mechanism. In the multimodal regime, each modality is evaluated against the <strong>other modality’s</strong> smoothed density. After lifting to the intrinsic functional, this produces a <strong>negative symmetric divergence coupling</strong> that can favor population-level separation under conditional heterogeneity.
+        </p>
 
-<!-- BibTeX -->
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="bibtex-card">
-      <span class="bibtex-label">
-        📚 Cite this paper:
-        <button class="copy-btn"
-          onclick="navigator.clipboard.writeText(document.getElementById('bibtex-code').innerText);this.innerText='Copied!';setTimeout(()=>this.innerText='Copy',1300);">
-          Copy
-        </button>
-      </span>
+        <div class="results-grid" style="display: grid; grid-template-columns: 7fr 3fr; gap: 20px; align-items: start;">
+        <div>
+            <!-- Use main paper Figure 6 -->
+            <!-- Recommended file: static/images/fig6_joint_angle_coupling.png -->
+            <div class="figure-frame">
+              <img src="static/images/fig6_joint_angle_coupling.png" alt="Figure 6: joint-angle coupling under controlled misalignment" style="width: 97%; height: auto;">
+              <div class="figure-caption">
+                Joint-angle coupling under controlled misalignment. The diagonal concentration weakens and deforms as heterogeneity increases, revealing how pairwise attraction can coexist with persistent population-level separation.
+              </div>
+            </div>
+          </div>
+          <div>
+            <!-- Use main paper Figure 3 -->
+            <!-- Recommended file: static/images/fig3_gap_vs_misalignment.png -->
+            <div class="figure-frame">
+              <img src="static/images/fig3_gap_vs_misalignment.png" alt="Figure 3: marginal gap versus latent misalignment">
+              <div class="figure-caption">
+                Quantitative signature of the multimodal bifurcation: the estimated symmetric divergence between modality marginals increases as latent cross-modal misalignment becomes stronger.
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <pre class="bibtex-pre"><code id="bibtex-code">@misc{cai2026geometric,
-  title        = {The Geometric Mechanics of Contrastive Representation Learning: Alignment Potentials, Entropic Dispersion, and Cross-Modal Divergence},
+        <div style="margin-top:1rem;">
+          <ul class="bullets-clean">
+            <li>Pairwise alignment does not by itself guarantee matched modality marginals.</li>
+            <li>Under conditional heterogeneity, symmetric multimodal InfoNCE can retain a stable distribution-level gap.</li>
+            <li>The resulting modality gap is therefore a geometric population effect rather than merely an initialization artifact.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= -->
+  <!-- Real data                 -->
+  <!-- ========================= -->
+  <section class="section" style="padding-top:0.5rem;">
+    <div class="container is-max-desktop section-wrap">
+      <div class="panel">
+        <p class="section-kicker">Result IV</p>
+        <h2 class="title is-3 section-title">The same signatures appear on MS-COCO and pretrained CLIP-like models</h2>
+        <div class="columns is-variable is-6">
+          <div class="column is-7">
+            <!-- Use main paper Figure 7 -->
+            <!-- Recommended file: static/images/fig7_mscoco_validation.png -->
+            <div class="figure-frame">
+              <img src="static/images/fig7_mscoco_validation.png" alt="Figure 7: MS-COCO validation of the modality-gap mechanism">
+              <div class="figure-caption">
+                <span class="figure-label">[instruction]: Replace with Figure 7 from the paper</span><br>
+                Real-data validation on pretrained CLIP-like models and controlled MS-COCO corruption. Strong retrieval and small cross-modal discrepancy are related but not equivalent, and structured caption corruption enlarges the gap systematically.
+              </div>
+            </div>
+          </div>
+          <div class="column is-5">
+            <h3 class="title is-5">What the reader should take away</h3>
+            <ul class="bullets-clean">
+              <li>Strong pretrained retrieval and small cross-modal discrepancy are related but not equivalent.</li>
+              <li>Mild, semantically plausible caption corruption already enlarges the image-text gap.</li>
+              <li>The gap is therefore not well captured by retrieval alone.</li>
+            </ul>
+            <p class="section-copy">
+              This section should feel like the culmination of the page rather than an appended benchmark panel. It is where the paper’s geometric diagnosis touches real pretrained models.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========================= -->
+  <!-- Takeaways                 -->
+  <!-- ========================= -->
+  <section class="section" style="padding-top:0.5rem;">
+    <div class="container is-max-desktop section-wrap">
+      <div class="panel warm">
+        <p class="section-kicker">Takeaways</p>
+        <h2 class="title is-3 section-title">What this project page should make immediately clear</h2>
+        <ul class="bullets-clean" style="font-size:1.03rem;">
+          <li>InfoNCE can be understood through induced <strong>population geometry</strong>, not only pairwise discrimination.</li>
+          <li>Unimodal InfoNCE is geometrically cohesive: it admits a <strong>unique Gibbs equilibrium</strong>.</li>
+          <li>Symmetric multimodal InfoNCE is qualitatively different because of a <strong>negative symmetric divergence coupling</strong>.</li>
+          <li>Closing the modality gap may require <strong>explicit distribution-level regularization</strong>, not merely stronger pairwise alignment.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= -->
+  <!-- BibTeX                    -->
+  <!-- ========================= -->
+  <section class="section" id="bibtex" style="padding-top:0.5rem;">
+    <div class="container is-max-desktop section-wrap">
+      <div class="bibtex-card">
+        <div class="bibtex-head">
+          <span>📚 Cite this paper</span>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('bibtex-code').innerText); this.innerText='Copied!'; setTimeout(()=>this.innerText='Copy',1200);">Copy</button>
+        </div>
+        <pre class="bibtex-pre"><code id="bibtex-code">@misc{cai2026geometric,
+  title        = {The Geometric Mechanics of Contrastive Learning: Alignment Potentials, Entropic Dispersion, and Modality Gap},
   author       = {Cai, Yichao and Zhang, Zhen and Liu, Yuhang and Shi, Javen Qinfeng},
   year         = {2026},
   eprint       = {2601.19597},
@@ -375,20 +625,17 @@
   doi          = {10.48550/arXiv.2601.19597},
   url          = {https://arxiv.org/abs/2601.19597}
 }</code></pre>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-<!-- Footer -->
-<footer class="footer">
-  <div class="content has-text-centered">
-    <p>
-      © 2026 Yichao Cai | Based on the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> template.
-      Licensed under <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
-    </p>
-  </div>
-</footer>
-
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        © 2026 Yichao Cai · Based on the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> template.
+      </p>
+      
+    </div>
+  </footer>
 </body>
 </html>
