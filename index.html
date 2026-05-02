@@ -381,7 +381,7 @@
         <p class="section-kicker">Abstract</p>
         <h2 class="title is-3 section-title">Summary</h2>
         <p class="section-copy">
-          InfoNCE-based contrastive learning is often characterized through alignment and uniformity, yet the induced population geometry remains only partially understood. We present a measure-theoretic framework in which encoders transport data laws to a fixed embedding manifold, and large-batch InfoNCE converges to explicit deterministic energies. This reveals a geometric bifurcation. In the unimodal regime, the intrinsic functional is strictly convex with a unique Gibbs equilibrium, clarifying uniformity as entropic dispersion within an alignment basin. In the symmetric multimodal regime, the intrinsic objective contains a persistent negative symmetric divergence coupling: each modality can act as a logarithmic barrier in the other’s effective landscape, so exact marginal matching becomes fragile under conditional heterogeneity. Controlled synthetic experiments and MS-COCO studies validate the predicted signatures.
+          While InfoNCE underlies modern contrastive learning, its geometric mechanisms remain under-characterized beyond the canonical alignment--uniformity decomposition. We develop a measure-theoretic framework in which learning evolves representation measures on a fixed embedding manifold. In the large-batch limit, we prove value and gradient consistency, linking the stochastic objective to explicit deterministic energy landscapes and revealing a geometric bifurcation between unimodal and symmetric multimodal regimes. In the unimodal case, the intrinsic energy is strictly convex and admits a unique Gibbs equilibrium, showing that entropy acts as a tie-breaker within the aligned basin. In the multimodal case, the intrinsic geometry becomes cross-coupled and contains a persistent negative symmetric divergence term: each modality’s marginal reshapes the effective landscape of the other, allowing strong pairwise alignment to coexist with a persistent modality gap. Controlled synthetic experiments and analyses of pretrained CLIP representations support these predictions. Overall, our results shift the analytical lens from pointwise discrimination to population geometry, showing that pairwise alignment alone is insufficient to control cross-modal marginal structure.
         </p>
       </div>
     </div>
@@ -576,9 +576,9 @@
               <li>Mild, semantically plausible caption corruption already enlarges the image-text gap.</li>
               <li>The gap is therefore not well captured by retrieval alone.</li>
             </ul>
-            <p class="section-copy">
+            <!-- <p class="section-copy">
               This section should feel like the culmination of the page rather than an appended benchmark panel. It is where the paper’s geometric diagnosis touches real pretrained models.
-            </p>
+            </p> -->
           </div>
         </div>
       </div>
